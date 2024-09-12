@@ -242,14 +242,6 @@ export default {
   mounted() {
     this.maxInsightWidth = this.calculateMaxInsightWidth();
     this.totalPillWidth = this.maxInsightWidth + 200;
-
-    const clickSound = this.$refs.clickSound;
-
-    clickSound.addEventListener("canplaythrough", () => {
-      console.log("Click sound is fully loaded and ready to play");
-    });
-
-    clickSound.volume = 1;
   },
 
   async created() {
@@ -262,10 +254,10 @@ export default {
     this.typingMessage = true;
 
     try {
-      const response = await axios.post(
-        "https://thesis-backend-transparent.onrender.com/api/chat",
-        {
-          // const response = await axios.post("http://localhost:3000/api/chat", {
+      // const response = await axios.post(
+      //   "https://thesis-backend-transparent.onrender.com/api/chat",
+      //   {
+          const response = await axios.post("http://localhost:3000/api/chat", {
           userId,
           message: "",
         }
@@ -585,10 +577,10 @@ export default {
       }
 
       try {
-        const response = await axios.post(
-          "https://thesis-backend-transparent.onrender.com/api/chat",
-          {
-            // const response = await axios.post("http://localhost:3000/api/chat", {
+        // const response = await axios.post(
+        //   "https://thesis-backend-transparent.onrender.com/api/chat",
+        //   {
+            const response = await axios.post("http://localhost:3000/api/chat", {
             userId,
             message: this.userMessage,
             delay: this.responseDelay,
@@ -1010,7 +1002,9 @@ export default {
       const userId = sessionStorage.getItem("userId");
 
       axios
-        .post("https://thesis-backend-transparent.onrender.com/api/end-session", {
+        // .post("https://thesis-backend-transparent.onrender.com/api/end-session", {
+          .post("http://localhost:3000/api/end-session", { 
+
           userId,
           sessionEnd: true,
         })
