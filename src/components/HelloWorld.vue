@@ -9,7 +9,6 @@
       <i class="fas fa-question"></i>
     </button>
 
-
     <!-- Messages Container -->
     <div class="messages" ref="messagesContainer">
       <div
@@ -29,7 +28,7 @@
           {{ message.content }}
         </template>
 
-        <template v-else-if="message.type === 'pill'">
+        <!-- <template v-else-if="message.type === 'pill'">
           <div class="progress-pill" :style="{ width: `${totalPillWidth}px` }">
             <div class="insights">
               {{ pillMessages[message.pillIndex].currentInsight }}
@@ -84,7 +83,7 @@
               ></lottie-player>
             </div>
           </div>
-        </template>
+        </template> -->
       </div>
 
       <div v-if="typingMessage" class="message assistant typing-indicator">
@@ -257,11 +256,10 @@ export default {
       // const response = await axios.post(
       //   "https://thesis-backend-transparent.onrender.com/api/chat",
       //   {
-          const response = await axios.post("http://localhost:3000/api/chat", {
-          userId,
-          message: "",
-        }
-      );
+      const response = await axios.post("http://localhost:3000/api/chat", {
+        userId,
+        message: "",
+      });
 
       this.typingMessage = false;
 
@@ -580,12 +578,11 @@ export default {
         // const response = await axios.post(
         //   "https://thesis-backend-transparent.onrender.com/api/chat",
         //   {
-            const response = await axios.post("http://localhost:3000/api/chat", {
-            userId,
-            message: this.userMessage,
-            delay: this.responseDelay,
-          }
-        );
+        const response = await axios.post("http://localhost:3000/api/chat", {
+          userId,
+          message: this.userMessage,
+          delay: this.responseDelay,
+        });
 
         // parse order from bot response
         const parsedOrder = this.parseOrderFromResponse(response.data.reply);
@@ -598,100 +595,100 @@ export default {
         }
 
         // check if bots lost message mentioned Order C and if user is trying to return it
-        const lastAssistantMessage = this.chatMessages
-          .slice()
-          .reverse()
-          .find((msg) => msg.role === "assistant" && msg.type === "text");
+        // const lastAssistantMessage = this.chatMessages
+        //   .slice()
+        //   .reverse()
+        //   .find((msg) => msg.role === "assistant" && msg.type === "text");
 
-        const isReturningOrderC =
-          lastAssistantMessage &&
-          lastAssistantMessage.content.includes("Order C") &&
-          this.userMessage.toLowerCase().includes("return");
+        // const isReturningOrderC =
+        //   lastAssistantMessage &&
+        //   lastAssistantMessage.content.includes("Order C") &&
+        //   this.userMessage.toLowerCase().includes("return");
 
-        console.log("Is returning Order C?", isReturningOrderC);
+        // console.log("Is returning Order C?", isReturningOrderC);
 
-        // PILL MESSAGE CHECKS
-        // special pill check
-        if (isReturningOrderC) {
-          this.showProgressBar = true;
-          this.insights = [
-            "Attempting to generate return label...",
-            "Encountering issues with shipment provider...",
-            "Escalating to human representative...",
-            // "Special PILL",
-          ];
-          console.log("Insights for returning Order C:", this.insights);
-        } else if (
-          response.data.reply.includes(
-            "I'm ready to assist you with your orders."
-          ) &&
-          this.userMessage.includes("123-456")
-        ) {
-          this.showProgressBar = true;
-          this.insights = [
-            // "Costumer Num Pill Success",
-            "Accessing Customer Database...",
-            "Verifying Customer Identity...",
-            "Retrieving Order History...",
-            "Operation Complete",
-            // "Costumer Num Pill Success",
-          ];
-        } else if (
-          response.data.reply.includes(
-            "It seems like the customer number you entered is incorrect. You can find your customer number in the confirmation E-Mail from your last purchase with us (Briefing Sheet)."
-          )
-        ) {
-          this.showProgressBar = true;
-          this.insights = [
-            // "Costumer Num Pill FAIl",
-            "Accessing Customer Database...",
-            "Verifying Customer Identity...",
-            "Retrieving Order History...",
-            "Operation Complete",
-            // "Costumer Num Pill FAIl",
-          ];
-        } else if (this.detectTrackingKeywords(this.userMessage)) {
-          this.showProgressBar = true;
-          this.insights = [
-            "Verifying Order Details...",
-            "Accessing Shipment Provider Database...",
-            "Fetching Current Shipment Status...",
-            "Operations Complete.",
-            // "Tracking Pill",
-          ];
-        } else if (this.detectAddress(this.userMessage)) {
-          this.showProgressBar = true;
-          this.insights = [
-            "Validating New Address...",
-            "Updating Order Details...",
-            "Notifying Delivery Service Provider...",
-            "Recalculating Delivery Time...",
-            // "Mod Addy Pill",
-          ];
-        } else if (this.detectCancelKeywords(this.userMessage)) {
-          this.showProgressBar = true;
-          this.insights = [
-            "Verifying Order Status...",
-            "Checking Cancellation Policy...",
-            // "Cancel Pill",
-          ];
-        } else if (this.detectReturnKeywords(this.userMessage)) {
-          this.showProgressBar = true;
-          this.insights = [
-            "Checking Return Policy...",
-            "Verifying Product Eligibility...",
-            // "Return Pill",
-          ];
-        } else if (this.detectGiftMessage(this.userMessage)) {
-          this.showProgressBar = true;
-          this.insights = [
-            "Adding Gift Message...",
-            "Updating Order Details...",
-            // "Gift Pill",
-          ];
-        } else {
-          this.showProgressBar = false;
-        }
+        // // PILL MESSAGE CHECKS
+        // // special pill check
+        // if (isReturningOrderC) {
+        //   this.showProgressBar = true;
+        //   this.insights = [
+        //     "Attempting to generate return label...",
+        //     "Encountering issues with shipment provider...",
+        //     "Escalating to human representative...",
+        //     // "Special PILL",
+        //   ];
+        //   console.log("Insights for returning Order C:", this.insights);
+        // } else if (
+        //   response.data.reply.includes(
+        //     "I'm ready to assist you with your orders."
+        //   ) &&
+        //   this.userMessage.includes("123-456")
+        // ) {
+        //   this.showProgressBar = true;
+        //   this.insights = [
+        //     // "Costumer Num Pill Success",
+        //     "Accessing Customer Database...",
+        //     "Verifying Customer Identity...",
+        //     "Retrieving Order History...",
+        //     "Operation Complete",
+        //     // "Costumer Num Pill Success",
+        //   ];
+        // } else if (
+        //   response.data.reply.includes(
+        //     "It seems like the customer number you entered is incorrect. You can find your customer number in the confirmation E-Mail from your last purchase with us (Briefing Sheet)."
+        //   )
+        // ) {
+        //   this.showProgressBar = true;
+        //   this.insights = [
+        //     // "Costumer Num Pill FAIl",
+        //     "Accessing Customer Database...",
+        //     "Verifying Customer Identity...",
+        //     "Retrieving Order History...",
+        //     "Operation Complete",
+        //     // "Costumer Num Pill FAIl",
+        //   ];
+        // } else if (this.detectTrackingKeywords(this.userMessage)) {
+        //   this.showProgressBar = true;
+        //   this.insights = [
+        //     "Verifying Order Details...",
+        //     "Accessing Shipment Provider Database...",
+        //     "Fetching Current Shipment Status...",
+        //     "Operations Complete.",
+        //     // "Tracking Pill",
+        //   ];
+        // } else if (this.detectAddress(this.userMessage)) {
+        //   this.showProgressBar = true;
+        //   this.insights = [
+        //     "Validating New Address...",
+        //     "Updating Order Details...",
+        //     "Notifying Delivery Service Provider...",
+        //     "Recalculating Delivery Time...",
+        //     // "Mod Addy Pill",
+        //   ];
+        // } else if (this.detectCancelKeywords(this.userMessage)) {
+        //   this.showProgressBar = true;
+        //   this.insights = [
+        //     "Verifying Order Status...",
+        //     "Checking Cancellation Policy...",
+        //     // "Cancel Pill",
+        //   ];
+        // } else if (this.detectReturnKeywords(this.userMessage)) {
+        //   this.showProgressBar = true;
+        //   this.insights = [
+        //     "Checking Return Policy...",
+        //     "Verifying Product Eligibility...",
+        //     // "Return Pill",
+        //   ];
+        // } else if (this.detectGiftMessage(this.userMessage)) {
+        //   this.showProgressBar = true;
+        //   this.insights = [
+        //     "Adding Gift Message...",
+        //     "Updating Order Details...",
+        //     // "Gift Pill",
+        //   ];
+        // } else {
+        //   this.showProgressBar = false;
+        // }
 
         // delay typing indicator
         setTimeout(() => {
@@ -1003,14 +1000,13 @@ export default {
 
       axios
         // .post("https://thesis-backend-transparent.onrender.com/api/end-session", {
-          .post("http://localhost:3000/api/end-session", { 
-
+        .post("http://localhost:3000/api/end-session", {
           userId,
           sessionEnd: true,
         })
         .then(() => {
           window.location.href =
-            "https://docs.google.com/forms/d/e/1FAIpQLSczzL6ne5xJj3e91Q2XjETvT6MrqFDw4BSRl9ZmtMVpD9Rd5g/viewform?usp=sf_link";
+            "https://docs.google.com/forms/d/e/1FAIpQLSdREjHim_g93k_hrONmOGjzelgP0yPvb25kLyOJAl35Tey6JA/viewform?usp=sf_link";
         })
         .catch((error) => {
           console.error("Error logging session end:", error);
@@ -1348,15 +1344,14 @@ button:focus {
 
 .messages::-webkit-scrollbar-track {
   background: #f1f1f1;
-  margin: 22px 0; 
-  border-radius: 12px; 
+  margin: 22px 0;
+  border-radius: 12px;
 }
 
 .messages::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 10px;
   border: 2px solid #f1f1f1;
-
 }
 
 .messages::-webkit-scrollbar-thumb:hover {
