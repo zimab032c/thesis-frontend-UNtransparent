@@ -253,13 +253,14 @@ export default {
     this.typingMessage = true;
 
     try {
-      // const response = await axios.post(
-      //   "https://thesis-backend-transparent.onrender.com/api/chat",
-      //   {
-      const response = await axios.post("http://localhost:3000/api/chat", {
-        userId,
-        message: "",
-      });
+      const response = await axios.post(
+        "https://thesis-backend-untransparent.onrender.com/api/chat",
+        {
+          // const response = await axios.post("http://localhost:3000/api/chat", {
+          userId,
+          message: "",
+        }
+      );
 
       this.typingMessage = false;
 
@@ -575,14 +576,15 @@ export default {
       }
 
       try {
-        // const response = await axios.post(
-        //   "https://thesis-backend-transparent.onrender.com/api/chat",
-        //   {
-        const response = await axios.post("http://localhost:3000/api/chat", {
-          userId,
-          message: this.userMessage,
-          delay: this.responseDelay,
-        });
+        const response = await axios.post(
+          "https://thesis-backend-untransparent.onrender.com/api/chat",
+          {
+            // const response = await axios.post("http://localhost:3000/api/chat", {
+            userId,
+            message: this.userMessage,
+            delay: this.responseDelay,
+          }
+        );
 
         // parse order from bot response
         const parsedOrder = this.parseOrderFromResponse(response.data.reply);
@@ -999,11 +1001,14 @@ export default {
       const userId = sessionStorage.getItem("userId");
 
       axios
-        // .post("https://thesis-backend-transparent.onrender.com/api/end-session", {
-        .post("http://localhost:3000/api/end-session", {
-          userId,
-          sessionEnd: true,
-        })
+        .post(
+          "https://thesis-backend-untransparent.onrender.com/api/end-session",
+          {
+            // .post("http://localhost:3000/api/end-session", {
+            userId,
+            sessionEnd: true,
+          }
+        )
         .then(() => {
           window.location.href =
             "https://docs.google.com/forms/d/e/1FAIpQLSdREjHim_g93k_hrONmOGjzelgP0yPvb25kLyOJAl35Tey6JA/viewform?usp=sf_link";
